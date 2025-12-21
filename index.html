@@ -3,735 +3,241 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TurkishSystems - Learn, Create, Share</title>
+    <title>TurkishSystems | Dijital Sanat ve Mühendislik</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
         
-        * {
-            font-family: 'Inter', sans-serif;
+        :root {
+            --primary: #3b82f6;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
         }
 
-        .video-overlay {
-            background: linear-gradient(
-                45deg,
-                rgba(0, 0, 0, 0.7) 0%,
-                rgba(0, 0, 0, 0.4) 50%,
-                rgba(0, 0, 0, 0.8) 100%
-            );
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #030712;
+            color: #f3f4f6;
+            overflow-x: hidden;
         }
 
-        .blur-header {
-            backdrop-filter: blur(20px);
-            background: rgba(0, 0, 0, 0.2);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        /* Arka Plan Renk Efektleri */
+        .glow-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.15) 0%, transparent 40%);
         }
 
-        .fade-in {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .game-card {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.6));
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(148, 163, 184, 0.1);
-        }
-
-        .game-card:hover {
-            transform: translateY(-15px) scale(1.05);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-        }
-
-        .game-card:hover .game-image {
-            transform: scale(1.1);
-        }
-
-        .game-image {
-            transition: transform 0.6s ease-in-out;
-        }
-
-        .news-card {
-            transition: all 0.3s ease;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.7));
-            border: 1px solid rgba(148, 163, 184, 0.1);
-        }
-
-        .news-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(147, 51, 234, 0.3);
-        }
-
-        .career-card {
-            transition: all 0.4s ease;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.6));
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(148, 163, 184, 0.1);
-        }
-
-        .career-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-        }
-
-        .support-card {
-            transition: all 0.3s ease;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.6));
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(148, 163, 184, 0.1);
-        }
-
-        .support-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(168, 85, 247, 0.3);
-        }
-
-        .hero-text {
-            animation: hero-reveal 2s ease-out forwards;
-        }
-
-        @keyframes hero-reveal {
-            0% {
-                opacity: 0;
-                transform: translateY(60px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .gradient-text {
-            background: linear-gradient(135deg, #ffffff, #cbd5e1, #94a3b8);
+        .animated-gradient-text {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6);
+            background-size: 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
+            animation: gradient-move 8s linear infinite;
         }
 
-        .glow-button {
-            position: relative;
-            overflow: hidden;
+        @keyframes gradient-move {
+            0% { background-position: 0%; }
+            100% { background-position: 300%; }
         }
 
-        .glow-button::before {
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .nav-link::after {
             content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
+            display: block;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width .3s;
         }
+        .nav-link:hover::after { width: 100%; }
 
-        .glow-button:hover::before {
-            left: 100%;
-        }
-
-        .parallax {
-            transform: translateZ(0);
-            will-change: transform;
-        }
-
-        @media (max-width: 768px) {
-            .game-card:hover {
-                transform: translateY(-10px) scale(1.02);
-            }
-        }
-
-        .pulse-dot {
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.5;
-                transform: scale(1.1);
-            }
-        }
-
-        .section-divider {
-            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);
+        /* Kurumsal Şerit */
+        .brand-line {
             height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
+        }
+
+        /* Yüzen Objeler */
+        .float { animation: floating 4s ease-in-out infinite; }
+        @keyframes floating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
         }
     </style>
 </head>
-<body class="bg-black text-white overflow-x-hidden">
-    <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 blur-header">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <div class="text-2xl font-black text-white">
-                    TURKISH.SYSTEMS
-                </div>
-                <nav class="hidden md:flex space-x-8">
-                    <a href="#projects" class="text-white hover:text-blue-400 transition-colors duration-300 font-medium">Projects</a>
-                    <a href="#about" class="text-white hover:text-blue-400 transition-colors duration-300 font-medium">About</a>
-                    <a href="#careers" class="text-white hover:text-blue-400 transition-colors duration-300 font-medium">Careers</a>
-                    <a href="#news" class="text-white hover:text-blue-400 transition-colors duration-300 font-medium">News</a>
-                    <a href="#support" class="text-white hover:text-blue-400 transition-colors duration-300 font-medium">Support</a>
-                </nav>
-                <div class="md:hidden">
-                    <button class="text-white" id="mobile-menu-btn">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
-                </div>
+<body>
+
+    <div class="glow-bg"></div>
+
+    <header class="fixed w-full z-50 top-0 bg-black/50 backdrop-blur-md border-b border-white/5">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <span class="text-xl font-extrabold tracking-tight uppercase">Turkish<span class="text-blue-500">Systems</span></span>
             </div>
             
-            <!-- Mobile Menu -->
-            <div class="md:hidden mobile-menu hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-lg border-t border-slate-800">
-                <nav class="container mx-auto px-6 py-4 space-y-4">
-                    <a href="#projects" class="block text-white hover:text-blue-400 transition-colors font-medium py-2">Projects</a>
-                    <a href="#about" class="block text-white hover:text-blue-400 transition-colors font-medium py-2">About</a>
-                    <a href="#careers" class="block text-white hover:text-blue-400 transition-colors font-medium py-2">Careers</a>
-                    <a href="#news" class="block text-white hover:text-blue-400 transition-colors font-medium py-2">News</a>
-                    <a href="#support" class="block text-white hover:text-blue-400 transition-colors font-medium py-2">Support</a>
-                </nav>
+            <div class="hidden md:flex items-center space-x-10 font-semibold text-sm">
+                <a href="#about" class="nav-link">Kurumsal</a>
+                <a href="#services" class="nav-link">Hizmetler</a>
+                <a href="#portfolio" class="nav-link">Portfolyo</a>
+                <a href="#contact" class="px-6 py-2.5 bg-white text-black rounded-full hover:bg-blue-600 hover:text-white transition-all duration-300">İş Birliği Başlat</a>
             </div>
-        </div>
+        </nav>
     </header>
 
-    <!-- Hero Section with Video Background -->
-    <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <!-- Video Background -->
-    <img src="assets/arkaplan.gif" class="absolute inset-0 w-full h-full object-cover z-0" />
-
-
-        
-        <!-- Dark Overlay -->
-        <div class="absolute inset-0 video-overlay z-10"></div>
-        
-        <!-- Hero Content -->
-        <div class="relative z-20 text-center px-6 max-w-6xl mx-auto">
-            <h1 class="hero-text text-6xl md:text-8xl font-black mb-6 gradient-text leading-tight">
-                We're TurkishSystems
-                &nbsp;
+    <section class="relative pt-40 pb-20 px-6 overflow-hidden">
+        <div class="container mx-auto text-center relative z-10">
+            <div class="inline-block px-4 py-1.5 mb-6 border border-white/10 rounded-full bg-white/5 text-sm font-medium tracking-wide">
+                🚀 <span class="text-blue-400">2026</span> Vizyonuyla Yazılımın Geleceği
+            </div>
+            <h1 class="text-5xl md:text-8xl font-extrabold mb-8 tracking-tight leading-tight">
+                Hayalleri <span class="animated-gradient-text">Kodla</span>,<br>Dünyayı <span class="animated-gradient-text">Değiştir.</span>
             </h1>
-            <p class="hero-text text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-8" style="animation-delay: 0.5s;">
-                We create more than software. We create digital worlds where ideas thrive.
+            <p class="text-gray-400 text-lg md:text-xl max-w-3xl mx-auto mb-12 leading-relaxed">
+                TurkishSystems, üst segment oyun geliştirme ve karmaşık yazılım mimarileri üzerine uzmanlaşmış, freelance esnekliği ile kurumsal kaliteyi birleştiren bir teknoloji atölyesidir.
             </p>
-            <div class="hero-text flex justify-center space-x-4" style="animation-delay: 1s;">
-                <button class="glow-button bg-blue-600 hover:bg-blue-500 px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 transform hover:scale-105">
-                    Power Up
-                </button>
-                <button class="glow-button border-2 border-white hover:bg-white hover:text-black px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300">
-                    Learn More
-                </button>
+            
+            <div class="flex flex-wrap justify-center gap-6">
+                <a href="#contact" class="px-10 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl font-bold shadow-lg shadow-blue-500/25 hover:scale-105 transition-all">Sipariş Oluştur</a>
+                <a href="#portfolio" class="px-10 py-4 glass-card rounded-2xl font-bold border border-white/10 hover:bg-white/5 transition-all">Çalışmaları İncele</a>
             </div>
         </div>
 
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
-            <div class="pulse-dot w-2 h-2 bg-white rounded-full mb-4"></div>
-            <svg class="w-6 h-6 text-white animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-blue-600/10 blur-[120px] rounded-full"></div>
+    </section>
+
+    <div class="brand-line"></div>
+
+    <section class="py-20 bg-black/20">
+        <div class="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
+            <div>
+                <div class="text-4xl font-extrabold text-white mb-2">60+</div>
+                <div class="text-gray-500 uppercase tracking-widest text-xs">Tamamlanan Proje</div>
+            </div>
+            <div>
+                <div class="text-4xl font-extrabold text-blue-500 mb-2">12M+</div>
+                <div class="text-gray-500 uppercase tracking-widest text-xs">Satır Kod</div>
+            </div>
+            <div>
+                <div class="text-4xl font-extrabold text-purple-500 mb-2">90%</div>
+                <div class="text-gray-500 uppercase tracking-widest text-xs">Müşteri Memnuniyeti</div>
+            </div>
+            <div>
+                <div class="text-4xl font-extrabold text-white mb-2">24/7</div>
+                <div class="text-gray-500 uppercase tracking-widest text-xs">Teknik Destek</div>
+            </div>
         </div>
     </section>
 
-    <!-- Projects Section --> 
-    <section id="projects" class="py-32 px-6 bg-slate-900"> 
-        <div class="container mx-auto max-w-7xl"> 
-            <div class="text-center mb-20 fade-in"> 
-                <h2 class="text-5xl md:text-6xl font-black mb-6 text-white"> 
-                    Our Projects 
-                </h2> 
-                <p class="text-xl text-gray-400 max-w-3xl mx-auto"> 
-                    From social platforms to smart tools, we build digital experiences that inform, connect, and inspire. 
-                </p> 
-            </div> 
+    <section id="services" class="py-32 relative">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col items-center text-center mb-20">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Uçtan Uca Çözümler</h2>
+                <div class="w-20 h-1 bg-blue-600 rounded-full"></div>
+            </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"> 
-                <!-- Sormaca --> 
-                <div class="game-card fade-in rounded-2xl overflow-hidden group"> 
-                    <div class="relative overflow-hidden h-64"> 
-                        <img src="assets/sormaca.png"  
-                            alt="Sormaca"  
-                            class="game-image w-full h-full object-cover"> 
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div> 
-                    </div> 
-                    <div class="p-8"> 
-                        <h3 class="text-2xl font-bold mb-4 text-white">Sormaca</h3> 
-                        <p class="text-gray-400 mb-6 leading-relaxed"> 
-                            A new-gen polling platform that blends social media dynamics with public opinion — fast, fun, and interactive.
-                        </p> 
-                        <button class="glow-button bg-emerald-600 hover:bg-emerald-500 px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"> 
-                            Explore Project 
-                        </button> 
-                    </div> 
-                </div> 
-
-                <!-- İduk --> 
-                <div class="game-card fade-in rounded-2xl overflow-hidden group" style="animation-delay: 0.2s;"> 
-                    <div class="relative overflow-hidden h-64"> 
-                        <img src="assets/iduk.png"  
-                            alt="İduk" 
-                            class="game-image w-full h-full object-cover"> 
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div> 
-                    </div> 
-                    <div class="p-8"> 
-                        <h3 class="text-2xl font-bold mb-4 text-white">İduk</h3> 
-                        <p class="text-gray-400 mb-6 leading-relaxed"> 
-                            An anonymous, topic-based social hub for free thinking and open discussion — knowledge meets community.
-                        </p> 
-                        <button class="glow-button bg-cyan-600 hover:bg-cyan-500 px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"> 
-                            Explore Project 
-                        </button> 
-                    </div> 
-                </div> 
-
-                <!-- Turkishpedia --> 
-                <div class="game-card fade-in rounded-2xl overflow-hidden group" style="animation-delay: 0.4s;"> 
-                    <div class="relative overflow-hidden h-64"> 
-                        <img src="assets/turkishpedia.png"  
-                             alt="Turkishpedia"  
-                             class="game-image w-full h-full object-cover"> 
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div> 
-                    </div> 
-                    <div class="p-8"> 
-                        <h3 class="text-2xl font-bold mb-4 text-white">Turkishpedia</h3> 
-                        <p class="text-gray-400 mb-6 leading-relaxed"> 
-                            A cultural knowledge base focused on Turkish history, values, and identity — built for the next generation.
-                        </p> 
-                        <button class="glow-button bg-yellow-600 hover:bg-yellow-500 px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"> 
-                            Explore Project 
-                        </button> 
-                    </div> 
-                </div> 
-            </div> 
-        </div> 
-    </section> 
-
-    <!-- About Section -->
-    <section id="about" class="py-32 px-6 bg-black">
-        <div class="container mx-auto max-w-6xl">
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
-                <div class="fade-in">
-                    <h2 class="text-5xl md:text-6xl font-black mb-8 text-white leading-tight">
-                        Your Experience, Our Priority
-                    </h2>
-                    <p class="text-xl text-gray-300 leading-relaxed mb-8">
-                        We're not just a game company — we're a creative technology studio. Every decision we make begins with a simple question: "What's best for our users?"
-                        We believe in the power of digital experiences to bring people together, solve problems, and leave a lasting impact.
-                    </p>
-                    <p class="text-lg text-gray-400 leading-relaxed mb-8">
-                        From our base in Istanbul to our digital reach across the world, TurkishSystems is committed to delivering the best possible experiences — whether in games, platforms, or applications.
-                        We're constantly evolving, learning, and pushing the limits of what technology and creativity can achieve.
-                    </p>
-                    <button class="glow-button border-2 border-blue-500 hover:bg-blue-500 px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300">
-                        Our Values
-                    </button>
-                </div>
-                <div class="fade-in" style="animation-delay: 0.3s;">
-                    <div class="relative">
-                        <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl blur-2xl opacity-20"></div>
-                        <video 
-                            autoplay 
-                            muted 
-                            loop 
-                            playsinline
-                            class="relative rounded-2xl w-full h-96 object-cover"
-                        >
-                            <source src="assets/code.mp4" type="video/mp4">
-                        </video>                        
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="glass-card p-12 rounded-[40px] group">
+                    <div class="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-blue-500 transition-colors">
+                        <i class="fa-solid fa-layer-group text-2xl text-blue-500 group-hover:text-white"></i>
                     </div>
+                    <h3 class="text-2xl font-bold mb-4">Oyun Motoru Mimarisi</h3>
+                    <p class="text-gray-400 leading-relaxed mb-6">Unity ve C# üzerinde derin uzmanlık. Fizik tabanlı sistemlerden yapay zeka entegrasyonuna kadar profesyonel oyun geliştirme.</p>
+                    <ul class="text-sm space-y-3 text-gray-500 font-medium">
+                        <li><i class="fa-solid fa-check text-blue-500 mr-2"></i> Mobil & PC Optimizasyonu</li>
+                        <li><i class="fa-solid fa-check text-blue-500 mr-2"></i> Çok Oyunculu (Multiplayer) Yapılar</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card p-12 rounded-[40px] border-t-purple-500/30 group">
+                    <div class="w-16 h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-purple-500 transition-colors">
+                        <i class="fa-solid fa-microchip text-2xl text-purple-500 group-hover:text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Sistem & Otomasyon</h3>
+                    <p class="text-gray-400 leading-relaxed mb-6">İş süreçlerinizi hızlandıran özel yazılımlar. Veri madenciliği, bot sistemleri ve yüksek trafikli backend mimarileri.</p>
+                    <ul class="text-sm space-y-3 text-gray-500 font-medium">
+                        <li><i class="fa-solid fa-check text-purple-500 mr-2"></i> API Entegrasyonları</li>
+                        <li><i class="fa-solid fa-check text-purple-500 mr-2"></i> Veritabanı Yönetimi</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card p-12 rounded-[40px] border-t-pink-500/30 group">
+                    <div class="w-16 h-16 bg-pink-500/10 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-pink-500 transition-colors">
+                        <i class="fa-solid fa-terminal text-2xl text-pink-500 group-hover:text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Freelance Danışmanlık</h3>
+                    <p class="text-gray-400 leading-relaxed mb-6">Mevcut projelerinizdeki teknik tıkanıklıkları gideriyoruz. Kod incelemesi (Code Review) ve performans iyileştirme hizmetleri.</p>
+                    <ul class="text-sm space-y-3 text-gray-500 font-medium">
+                        <li><i class="fa-solid fa-check text-pink-500 mr-2"></i> Hızlı Çözüm Odaklılık</li>
+                        <li><i class="fa-solid fa-check text-pink-500 mr-2"></i> Esnek Çalışma Modeli</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Careers Section -->
-    <section id="careers" class="py-32 px-6 bg-slate-900">
-        <div class="container mx-auto max-w-7xl">
-            <div class="text-center mb-20 fade-in">
-                <h2 class="text-5xl md:text-6xl font-black mb-6 text-white">
-                    Join Our Team
-                </h2>
-                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
-                    We're always looking for passionate creators, developers, and visionaries to help us build the future of digital experiences.
-                </p>
+    <section id="contact" class="py-32 px-6">
+        <div class="container mx-auto max-w-5xl bg-gradient-to-br from-blue-900/40 to-purple-900/40 rounded-[50px] p-12 md:p-20 border border-white/10 relative overflow-hidden text-center">
+            <div class="relative z-10">
+                <h2 class="text-4xl md:text-6xl font-extrabold mb-8">Bir sonraki büyük adımı <br> birlikte atalım.</h2>
+                <p class="text-gray-300 text-lg mb-10 max-w-xl mx-auto">Kurumsal siparişleriniz veya freelance talepleriniz için uzman ekibimizle iletişime geçin.</p>
+                <a href="https://calendly.com/mertkandurmaz" class="inline-flex items-center px-12 py-5 bg-white text-black font-bold rounded-2xl hover:bg-blue-500 hover:text-white transition-all group">
+                    Projenizi Anlatın
+                    <i class="fa-solid fa-arrow-right ml-3 group-hover:translate-x-2 transition-transform"></i>
+                </a>
             </div>
-
-            <!-- Company Culture -->
-            <div class="grid lg:grid-cols-2 gap-16 items-center mb-20">
-                <div class="fade-in">
-                    <h3 class="text-4xl font-bold mb-6 text-green-400">Why TurkishSystems?</h3>
-                    <div class="space-y-6">
-                        <div class="flex items-start space-x-4">
-                            <div class="w-6 h-6 bg-green-500 rounded-full flex-shrink-0 mt-1"></div>
-                            <div>
-                                <h4 class="font-semibold text-white mb-2">Innovation First</h4>
-                                <p class="text-gray-400">Work on cutting-edge projects that push the boundaries of technology and creativity.</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start space-x-4">
-                            <div class="w-6 h-6 bg-blue-500 rounded-full flex-shrink-0 mt-1"></div>
-                            <div>
-                                <h4 class="font-semibold text-white mb-2">Remote-First Culture</h4>
-                                <p class="text-gray-400">Work from anywhere in the world with flexible hours and unlimited PTO.</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start space-x-4">
-                            <div class="w-6 h-6 bg-purple-500 rounded-full flex-shrink-0 mt-1"></div>
-                            <div>
-                                <h4 class="font-semibold text-white mb-2">Growth & Learning</h4>
-                                <p class="text-gray-400">Continuous learning budget, mentorship programs, and career development paths.</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start space-x-4">
-                            <div class="w-6 h-6 bg-yellow-500 rounded-full flex-shrink-0 mt-1"></div>
-                            <div>
-                                <h4 class="font-semibold text-white mb-2">Impact & Ownership</h4>
-                                <p class="text-gray-400">Take ownership of projects that reach millions of users worldwide.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="fade-in" style="animation-delay: 0.3s;">
-                    <div class="relative">
-                        <div class="absolute inset-0 bg-gradient-to-r from-green-500 to-blue-500 rounded-2xl blur-2xl opacity-20"></div>
-                        <div class="relative bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50">
-                            <div class="text-center">
-                                <div class="text-6xl mb-4">🚀</div>
-                                <h4 class="text-2xl font-bold text-white mb-4">Ready to Join Us?</h4>
-                                <p class="text-gray-300 mb-6">We believe in hiring the best talent, regardless of location or background.</p>
-                                <button class="glow-button bg-green-600 hover:bg-green-500 px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 transform hover:scale-105">
-                                    View Open Positions
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Open Positions - Removed -->
-            </div>
+            <div class="absolute -top-24 -left-24 w-64 h-64 bg-blue-500/20 blur-[80px] rounded-full"></div>
+            <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-purple-500/20 blur-[80px] rounded-full"></div>
         </div>
     </section>
 
-    <!-- Latest News Section -->
-    <section id="news" class="py-32 px-6 bg-black">
-        <div class="container mx-auto max-w-7xl">
-            <div class="text-center mb-20 fade-in">
-                <h2 class="text-5xl md:text-6xl font-black mb-6 text-white">
-                    Latest News
-                </h2>
-                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
-                    Stay up to date with the latest features, updates, and community highlights from TurkishSystems.
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- News Item 1 - Sormaca -->
-                <article class="news-card fade-in rounded-2xl overflow-hidden">
-                    <div class="relative h-48">
-                        <img src="assets/sormaca-update.png" 
-                            alt="Sormaca Update" 
-                            class="w-full h-full object-cover">
-                        <div class="absolute top-4 left-4 bg-emerald-600 px-3 py-1 rounded-full text-sm font-semibold">
-                            Sormaca
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="text-gray-400 text-sm mb-2">July 27, 2025</div>
-                        <h3 class="text-xl font-bold mb-3 text-white">Live Poll Mode Released</h3>
-                        <p class="text-gray-400 leading-relaxed">
-                            Sormaca now supports real-time polls with animated results — perfect for streamers, classrooms, and events.
-                        </p>
-                    </div>
-                </article>
-
-                <!-- News Item 2 - İduk -->
-                <article class="news-card fade-in rounded-2xl overflow-hidden" style="animation-delay: 0.2s;">
-                    <div class="relative h-48">
-                        <img src="assets/iduk-update.png" 
-                            alt="İduk Alpha Launch" 
-                            class="w-full h-full object-cover">
-                        <div class="absolute top-4 left-4 bg-cyan-600 px-3 py-1 rounded-full text-sm font-semibold">
-                            İduk
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="text-gray-400 text-sm mb-2">July 24, 2025</div>
-                        <h3 class="text-xl font-bold mb-3 text-white">Alpha Version Now Available</h3>
-                        <p class="text-gray-400 leading-relaxed">
-                            İduk enters Alpha! Early users can now explore anonymous discussion threads, social profiles, and topic feeds.
-                        </p>
-                    </div>
-                </article>
-
-                <!-- News Item 3 - Turkishpedia -->
-                <article class="news-card fade-in rounded-2xl overflow-hidden" style="animation-delay: 0.4s;">
-                    <div class="relative h-48">
-                        <img src="assets/turkishpedia-update.png" 
-                            class="w-full h-full object-cover">
-                        <div class="absolute top-4 left-4 bg-yellow-600 px-3 py-1 rounded-full text-sm font-semibold">
-                            Turkishpedia
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="text-gray-400 text-sm mb-2">July 15, 2025</div>
-                        <h3 class="text-xl font-bold mb-3 text-white">Turkishpedia Beta Goes Live</h3>
-                        <p class="text-gray-400 leading-relaxed">
-                            Our cultural knowledge platform is officially live in beta — featuring curated articles on Turkish history and identity.
-                        </p>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- Support Section -->
-    <section id="support" class="py-32 px-6 bg-slate-900">
-        <div class="container mx-auto max-w-7xl">
-            <div class="text-center mb-20 fade-in">
-                <h2 class="text-5xl md:text-6xl font-black mb-6 text-white">
-                    Need Help?
-                </h2>
-                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
-                    We're here to help! Get in touch with our support team.
-                </p>
-            </div>
-
-            <!-- Contact Information -->
-            <div class="fade-in">
-                <div class="grid lg:grid-cols-2 gap-16 items-center">
-                    <div>
-                        <h3 class="text-4xl font-bold mb-8 text-white">Still Need Help?</h3>
-                        <p class="text-xl text-gray-300 mb-8 leading-relaxed">
-                            Our support team is available 24/7 to help you with any questions or issues you might have.
-                        </p>
-                        
-                        <div class="space-y-6">
-                            <div class="flex items-center space-x-4">
-                                <div class="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center">
-                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-white">Email Support</h4>
-                                    <p class="text-gray-400">support@turkish.systems</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-center space-x-4">
-                                <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
-                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-white">Live Chat</h4>
-                                    <p class="text-gray-400">Available 24/7 on our platforms</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-center space-x-4">
-                                <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center">
-                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-white">Office Location</h4>
-                                    <p class="text-gray-400">Istanbul, Turkiye</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <div class="support-card rounded-2xl p-8">
-                            <h4 class="text-2xl font-bold text-white mb-6">Send us a Message</h4>
-                            <form class="space-y-6">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-300 mb-2">Name</label>
-                                    <input type="text" class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white focus:border-purple-500 focus:outline-none transition-colors">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-300 mb-2">Email</label>
-                                    <input type="email" class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white focus:border-purple-500 focus:outline-none transition-colors">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-300 mb-2">Subject</label>
-                                    <select class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white focus:border-purple-500 focus:outline-none transition-colors">
-                                        <option>Technical Support</option>
-                                        <option>Account Issues</option>
-                                        <option>Billing & Payments</option>
-                                        <option>General Inquiry</option>
-                                        <option>Feature Request</option>
-                                        <option>Bug Report</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-300 mb-2">Message</label>
-                                    <textarea rows="4" class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white focus:border-purple-500 focus:outline-none transition-colors" placeholder="Tell us how we can help..."></textarea>
-                                </div>
-                                <button type="submit" class="glow-button bg-purple-600 hover:bg-purple-500 px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 w-full">
-                                    Send Message
-                                </button>
-                            </form>
-                        </div>
-                    </div>
+    <footer class="py-20 border-t border-white/5 bg-black/40">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-10">
+                <div>
+                    <div class="text-2xl font-black mb-4 tracking-tighter uppercase">Turkish<span class="text-blue-500">Systems</span></div>
+                    <p class="text-gray-500 max-w-xs text-sm">Yazılımda kaliteyi, oyun geliştirmede yaratıcılığı ön planda tutan teknoloji çözüm ortağınız.</p>
+                </div>
+                <div class="flex space-x-8 text-sm font-bold uppercase tracking-widest text-gray-400">
+                    <a href="https://github.com/erissos" class="hover:text-blue-500 transition">Github</a>
+                    <a href="https://www.linkedin.com/in/adem-mertkan-durmaz-683667251/" class="hover:text-blue-500 transition">LinkedIn</a>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-16 px-6 bg-black border-t border-slate-800">
-        <div class="container mx-auto max-w-6xl">
-            <div class="text-center">
-                <div class="text-4xl font-black mb-6 text-white">TURKISHSYSTEMS</div>
-                <p class="text-gray-400 mb-8 max-w-2xl mx-auto">
-                    We create more than software. We create digital worlds where ideas thrive.
-                    Every decision we make starts with the question: "What's best for our users?"
-                </p>              
-                <div class="border-t border-slate-800 pt-8">
-                    <p class="text-gray-500 text-sm">
-                        © 2025 TurkishSystems, Inc. All rights reserved.
-                    </p>
-                </div>
+            <div class="mt-16 pt-8 border-t border-white/5 text-center text-gray-600 text-sm">
+                &copy; 2026 TurkishSystems. All rights reserved. Crafting Digital Excellence.
             </div>
         </div>
     </footer>
 
     <script>
-        // Mobile menu functionality
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.querySelector('.mobile-menu');
-        
-        if (mobileMenuBtn && mobileMenu) {
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-                
-                // Toggle hamburger icon
-                const svg = mobileMenuBtn.querySelector('svg');
-                if (!mobileMenu.classList.contains('hidden')) {
-                    svg.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>`;
-                } else {
-                    svg.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>`;
-                }
-            });
-        }
-
-        // Smooth scroll animation observer
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        // Observe all fade-in elements
-        document.querySelectorAll('.fade-in').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Smooth scroll for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const headerHeight = 80;
-                    const targetPosition = target.offsetTop - headerHeight;
-                    
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Parallax effect for hero section
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallaxElements = document.querySelectorAll('.parallax');
-            
-            parallaxElements.forEach(element => {
-                const speed = 0.5;
-                element.style.transform = `translateY(${scrolled * speed}px)`;
-            });
-        });
-
-        // Header background on scroll
+        // Basit scroll efekti: Header küçültme
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(0, 0, 0, 0.9)';
+            if (window.scrollY > 50) {
+                header.classList.add('py-2');
+                header.classList.remove('py-4');
             } else {
-                header.style.background = 'rgba(0, 0, 0, 0.2)';
+                header.classList.add('py-4');
+                header.classList.remove('py-2');
             }
         });
-
-        // Game card hover effects
-        document.querySelectorAll('.game-card, .career-card, .support-card').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                if (card.classList.contains('game-card')) {
-                    card.style.transform = 'translateY(-15px) scale(1.05)';
-                } else if (card.classList.contains('career-card')) {
-                    card.style.transform = 'translateY(-10px)';
-                } else if (card.classList.contains('support-card')) {
-                    card.style.transform = 'translateY(-5px)';
-                }
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0) scale(1)';
-            });
-        });
-
-        // Video fallback for mobile
-        const videos = document.querySelectorAll('video');
-        videos.forEach(video => {
-            video.addEventListener('loadstart', () => {
-                console.log('Video loading started');
-            });
-
-            video.addEventListener('error', () => {
-                console.log('Video failed to load');
-                // Fallback to static background
-                video.style.display = 'none';
-                video.parentElement.style.background = 'linear-gradient(135deg, #1e293b, #0f172a)';
-            });
-        });
-
-        // Form submission (basic example)
-        const contactForm = document.querySelector('form');
-        if (contactForm) {
-            contactForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                // Here you would typically send the form data to your server
-                alert('Thank you for your message! We\'ll get back to you soon.');
-            });
-        }
     </script>
 </body>
 </html>
